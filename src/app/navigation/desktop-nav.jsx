@@ -129,6 +129,7 @@ function ChplDesktopNav({
       if (!anchor) {
         return;
       }
+      window.dispatchEvent(new CustomEvent('close-all-nav-overlays', { detail: { source: 'desktop-nav' } }));
       setCompareAnchorEl(null);
       setResourcesOpen(false);
       setShortcutsOpen(false);
@@ -142,6 +143,7 @@ function ChplDesktopNav({
       if (!anchor) {
         return;
       }
+      window.dispatchEvent(new CustomEvent('close-all-nav-overlays', { detail: { source: 'desktop-nav' } }));
       setCmsAnchorEl(null); 
       setResourcesOpen(false);
       setShortcutsOpen(false);
@@ -165,6 +167,16 @@ function ChplDesktopNav({
     setShortcutsOpen(false);
   };
 
+  useEffect(() => {
+    const handleCloseAll = (e) => {
+      if (e.detail?.source !== 'desktop-nav') {
+        closeAllNavOverlays();
+      }
+    };
+    window.addEventListener('close-all-nav-overlays', handleCloseAll);
+    return () => window.removeEventListener('close-all-nav-overlays', handleCloseAll);
+  }, []);
+
   const toggleCmsWidget = () => {
     if (cmsAnchorEl) {
       setCmsAnchorEl(null);
@@ -174,6 +186,7 @@ function ChplDesktopNav({
     if (!anchor) {
       return;
     }
+    window.dispatchEvent(new CustomEvent('close-all-nav-overlays', { detail: { source: 'desktop-nav' } }));
     closeAllNavOverlays();
     setCmsAnchorEl(anchor);
   };
@@ -196,6 +209,7 @@ function ChplDesktopNav({
     if (!anchor) {
       return;
     }
+    window.dispatchEvent(new CustomEvent('close-all-nav-overlays', { detail: { source: 'desktop-nav' } }));
     closeAllNavOverlays();
     setCompareAnchorEl(anchor);
   };
@@ -212,6 +226,7 @@ function ChplDesktopNav({
     setResourcesOpen((prev) => {
       const next = !prev;
       if (next) {
+        window.dispatchEvent(new CustomEvent('close-all-nav-overlays', { detail: { source: 'desktop-nav' } }));
         closeAllNavOverlays();
       }
       return next;
@@ -226,6 +241,7 @@ function ChplDesktopNav({
     setShortcutsOpen((prev) => {
       const next = !prev;
       if (next) {
+        window.dispatchEvent(new CustomEvent('close-all-nav-overlays', { detail: { source: 'desktop-nav' } }));
         closeAllNavOverlays();
       }
       return next;

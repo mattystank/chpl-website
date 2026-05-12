@@ -92,13 +92,17 @@ function ChplToggle({ dispatch = () => {} }) {
   }, []);
 
   useEffect(() => {
-    const handleCloseFromOther = () => handleClose();
-    window.addEventListener('close-admin-login', handleCloseFromOther);
-    return () => window.removeEventListener('close-admin-login', handleCloseFromOther);
+    const handleCloseAll = (e) => {
+      if (e.detail?.source !== 'admin-login') {
+        handleClose();
+      }
+    };
+    window.addEventListener('close-all-nav-overlays', handleCloseAll);
+    return () => window.removeEventListener('close-all-nav-overlays', handleCloseAll);
   }, []);
 
   const handleClick = (e) => {
-    window.dispatchEvent(new CustomEvent('close-announcements'));
+    window.dispatchEvent(new CustomEvent('close-all-nav-overlays', { detail: { source: 'admin-login' } }));
     if (isMobile) {
       setAdminDrawerOpen(true);
       return;

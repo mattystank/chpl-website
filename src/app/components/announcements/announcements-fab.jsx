@@ -36,14 +36,18 @@ function ChplAnnouncementsFab() {
   }, [data, isLoading, isSuccess]);
 
   useEffect(() => {
-    const handleCloseFromOther = () => setAnchorEl(null);
-    window.addEventListener('close-announcements', handleCloseFromOther);
-    return () => window.removeEventListener('close-announcements', handleCloseFromOther);
+    const handleCloseAll = (e) => {
+      if (e.detail?.source !== 'announcements') {
+        setAnchorEl(null);
+      }
+    };
+    window.addEventListener('close-all-nav-overlays', handleCloseAll);
+    return () => window.removeEventListener('close-all-nav-overlays', handleCloseAll);
   }, []);
 
   const handleToggle = (event) => {
     if (!anchorEl) {
-      window.dispatchEvent(new CustomEvent('close-admin-login'));
+      window.dispatchEvent(new CustomEvent('close-all-nav-overlays', { detail: { source: 'announcements' } }));
     }
     setAnchorEl(anchorEl ? null : event.currentTarget);
   };
