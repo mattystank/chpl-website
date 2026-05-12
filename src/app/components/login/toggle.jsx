@@ -91,7 +91,14 @@ function ChplToggle({ dispatch = () => {} }) {
     getAccessToken().then((token) => (token ? setLoginWidgetState('LOGGEDIN') : setLoginWidgetState('SIGNIN')));
   }, []);
 
+  useEffect(() => {
+    const handleCloseFromOther = () => handleClose();
+    window.addEventListener('close-admin-login', handleCloseFromOther);
+    return () => window.removeEventListener('close-admin-login', handleCloseFromOther);
+  }, []);
+
   const handleClick = (e) => {
+    window.dispatchEvent(new CustomEvent('close-announcements'));
     if (isMobile) {
       setAdminDrawerOpen(true);
       return;

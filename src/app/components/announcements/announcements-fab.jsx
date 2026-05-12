@@ -35,7 +35,16 @@ function ChplAnnouncementsFab() {
     setAnnouncements(data.sort((a, b) => a.startDate - b.startDate));
   }, [data, isLoading, isSuccess]);
 
+  useEffect(() => {
+    const handleCloseFromOther = () => setAnchorEl(null);
+    window.addEventListener('close-announcements', handleCloseFromOther);
+    return () => window.removeEventListener('close-announcements', handleCloseFromOther);
+  }, []);
+
   const handleToggle = (event) => {
+    if (!anchorEl) {
+      window.dispatchEvent(new CustomEvent('close-admin-login'));
+    }
     setAnchorEl(anchorEl ? null : event.currentTarget);
   };
 
