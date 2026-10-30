@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 
 import ChplLogin from 'components/login/login';
 import { setLoginState } from 'components/login/userInfo.slice';
+import { goToState } from 'services/navigation.service';
 
 const styles = {
   content: {
@@ -25,6 +26,13 @@ function ChplForgotPassword({ uuid }) {
     dispatch(setLoginState('RESETFORGOTTENPASSWORD'));
   }, []);
 
+  // the reset form hands off to sign in; once signed in, leave the reset page for the home page
+  const handleLogin = (action) => {
+    if (action === 'loggedIn') {
+      goToState('search');
+    }
+  };
+
   return (
     <Box sx={styles.fixFooterSpacing}>
       <Container maxWidth="xs" sx={styles.content}>
@@ -34,6 +42,7 @@ function ChplForgotPassword({ uuid }) {
       </Container>
       <Container maxWidth="xs">
         <ChplLogin
+          dispatch={handleLogin}
           uuid={uuid}
         />
       </Container>
