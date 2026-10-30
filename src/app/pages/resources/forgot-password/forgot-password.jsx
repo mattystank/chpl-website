@@ -1,23 +1,11 @@
 import React, { useEffect } from 'react';
-import { Box, Container, Typography } from '@mui/material';
 import { string } from 'prop-types';
 import { useDispatch } from 'react-redux';
 
 import ChplLogin from 'components/login/login';
 import { setLoginState } from 'components/login/userInfo.slice';
+import { ChplPageBody, ChplPageHeader } from 'components/util';
 import { goToState } from 'services/navigation.service';
-
-const styles = {
-  content: {
-    display: 'grid',
-    gap: '8px',
-    gridTemplateColumns: '1fr',
-    padding: '16px',
-  },
-  fixFooterSpacing: {
-    minHeight: 'calc(100vh - 136px)',
-  },
-};
 
 function ChplForgotPassword({ uuid }) {
   const dispatch = useDispatch();
@@ -34,19 +22,15 @@ function ChplForgotPassword({ uuid }) {
   };
 
   return (
-    <Box sx={styles.fixFooterSpacing}>
-      <Container maxWidth="xs" sx={styles.content}>
-        <Typography variant="h1">
-          Forgot Password
-        </Typography>
-      </Container>
-      <Container maxWidth="xs">
+    <>
+      <ChplPageHeader text="Forgot Password" maxWidth="xs" />
+      <ChplPageBody maxWidth="xs">
         <ChplLogin
           dispatch={handleLogin}
           uuid={uuid}
         />
-      </Container>
-    </Box>
+      </ChplPageBody>
+    </>
   );
 }
 

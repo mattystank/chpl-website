@@ -8,7 +8,7 @@ import {
 } from '@mui/material';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { node, string } from 'prop-types';
+import { node, oneOf, string } from 'prop-types';
 
 import { eventTrack } from 'services/analytics.service';
 import { useAnalyticsContext } from 'shared/contexts';
@@ -19,13 +19,14 @@ function ChplPageHeader({
   subtitle = null,
   actions = null,
   titleAdornment = null,
+  maxWidth = 'lg',
 }) {
   const [expanded, setExpanded] = useState(true);
   const { analytics } = useAnalyticsContext();
 
   return (
     <Box position="relative" boxShadow={2} bgcolor={palette.white} p={8}>
-      <Container maxWidth="lg">
+      <Container maxWidth={maxWidth}>
         <Box display="flex" alignItems="center" justifyContent="space-between" flexWrap="wrap" gap="16px">
           <Box display="flex" alignItems="center" gap="4px">
             <Typography variant="h1">
@@ -80,4 +81,5 @@ ChplPageHeader.propTypes = {
   subtitle: node,
   actions: node,
   titleAdornment: node,
+  maxWidth: oneOf(['xs', 'sm', 'md', 'lg', 'xl', false]),
 };

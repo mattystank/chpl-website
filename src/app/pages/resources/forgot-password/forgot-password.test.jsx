@@ -37,6 +37,12 @@ describe('forgot password page', () => {
     expect(goToState).not.toHaveBeenCalled();
   });
 
+  it('shows the standard page header', () => {
+    render(<ChplForgotPassword uuid={UUID} />);
+
+    expect(screen.getByRole('heading', { level: 1, name: 'Forgot Password' })).toBeInTheDocument();
+  });
+
   it('goes to the home page once the user signs in after resetting', () => {
     render(<ChplForgotPassword uuid={UUID} />);
     fireEvent.click(screen.getByRole('button', { name: 'Log in' }));
